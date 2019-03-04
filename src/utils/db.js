@@ -5,5 +5,13 @@ export function saveKey(key) {
 }
 
 export function loadKey(callback) {
-  return AsyncStorage.getItem("USER_KEY", callback);
+  const USER_KEY = AsyncStorage.getItem("USER_KEY", callback);
+  return USER_KEY
 }
+export function removeKey(){
+  const USER_KEY = saveKey()
+  const removeKey = AsyncStorage.removeItem(USER_KEY)
+  return removeKey
+}
+  
+ 

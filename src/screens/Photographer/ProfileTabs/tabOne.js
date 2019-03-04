@@ -63,7 +63,7 @@ class TabOne extends Component {
             <FlatList
              data={this.props.User.imageData}
              numColumns={2}
-             renderItem={(item) => { console.log(item)
+             renderItem={(item) => { 
              return<ImageComponent navi={"Profile"} navigation={this.props.navigation}item={item.item}/>
             }}
             

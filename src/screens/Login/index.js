@@ -28,16 +28,16 @@ class LoginForm extends Component {
 
   signIn = async () => {
     try {
-      // console.log('>>>>>')
-      // await GoogleSignin.hasPlayServices();
-      // const { accessToken, idToken } = await GoogleSignin.signIn();
-      // const credential = firebase.auth.GoogleAuthProvider.credential(idToken, accessToken);
-      // const firebaseUserCredential = await firebase.auth().signInWithCredential(credential);
-      // const { email, displayName, uid } = firebaseUserCredential.user;
-      // this.props.User.create({email, displayName, uid}).then(() =>{
-      //   this.props.navigation.replace("Drawer");
-      // });
-      this.props.navigation.replace("Drawer");
+      console.log('>>>>>')
+      await GoogleSignin.hasPlayServices();
+      const { accessToken, idToken } = await GoogleSignin.signIn();
+      const credential = firebase.auth.GoogleAuthProvider.credential(idToken, accessToken);
+      const firebaseUserCredential = await firebase.auth().signInWithCredential(credential);
+      const { email, displayName, uid } = firebaseUserCredential.user;
+      this.props.User.create({email, displayName, uid}).then(() =>{
+        this.props.navigation.replace("Drawer");
+      });
+     
     } catch (error) {
       console.log(error);
     }

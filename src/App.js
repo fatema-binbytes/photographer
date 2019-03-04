@@ -1,6 +1,7 @@
 import React from "react";
 import { StackNavigator, DrawerNavigator ,TabNavigator,createMaterialTopTabNavigator} from "react-navigation";
 import { Root } from "native-base";
+import Splash from './screens/Splash/splash'
 import Login from "./screens/Login/";
 import ForgotPassword from "./screens/ForgotPassword";
 import SignUp from "./screens/SignUp/";
@@ -45,13 +46,7 @@ const TabNavigation = TabNavigator({
   },
   tabStyle: {
     width:95
-  },
-  
-  
-  // labelStyle: {
-  //     fontSize: 13,
-  //     },
-    }
+  },}
 })
 
 const Drawer = DrawerNavigator(
@@ -69,6 +64,7 @@ const Drawer = DrawerNavigator(
 
 const App = StackNavigator(
   {
+    Splash:{screen:Splash},
     Login: { screen: Login },
     SignUp: { screen: SignUp },
     ForgotPassword: { screen: ForgotPassword },
@@ -81,7 +77,7 @@ const App = StackNavigator(
   },
   {
     index: 0,
-    initialRouteName: "Login",
+    initialRouteName: "Splash",
     headerMode: "none"
   }
 );

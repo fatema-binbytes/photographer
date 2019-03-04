@@ -14,15 +14,20 @@ import {
 } from "native-base";
 import{inject,observer}from 'mobx-react'
 import {Grid, Col} from "react-native-easy-grid";
+import {removeKey} from '../../utils/db'
 
 import styles from "./style";
-const resetAction = NavigationActions.reset({
-  index: 0,
-  actions: [NavigationActions.navigate({routeName: "Login"})]
-});
+
 @inject("User")
 @observer
 class SideBar extends Component {
+  logout(){
+    
+    removeKey
+    this.props.User.id = null
+    console.log(removeKey)
+    this.props.navigation.replace("Login")
+  }
   render() {
     const navigation = this.props.navigation;
     return (
@@ -72,9 +77,7 @@ class SideBar extends Component {
               <Grid>
                 <Col>
                   <TouchableOpacity
-                    onPress={() => {
-                      navigation.dispatch(resetAction);
-                    }}
+                    onPress={() => this.logout()}
                     style={{
                       alignSelf: "flex-start",
                       backgroundColor: "transparent"

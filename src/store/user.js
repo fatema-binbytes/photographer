@@ -31,6 +31,7 @@ class User {
   async create(data) {
     this.id = data.uid;
     console.log(data)
+    console.log(this.id)
     return saveKey(data.uid);
   }
 
