@@ -7,7 +7,7 @@ import {inject,observer} from 'mobx-react'
 export default class Splash  extends Component{
     componentDidMount(){
       const key = this.props.User.id
-      console.log(key,)
+      console.log(key)
       setInterval(()=>{
           if(key){
               this.props.navigation.replace('Drawer')
