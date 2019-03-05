@@ -6,7 +6,7 @@ import {
   View,
 } from "native-base";
 import { GoogleSignin, GoogleSigninButton } from "react-native-google-signin";
-import { inject, observer } from "mobx-react"
+import { inject, observer } from "mobx-react";
 import firebase from "react-native-firebase";
 
 import styles from "./styles";
@@ -28,16 +28,12 @@ class LoginForm extends Component {
 
   signIn = async () => {
     try {
-      console.log('>>>>>')
       await GoogleSignin.hasPlayServices();
       const { accessToken, idToken } = await GoogleSignin.signIn();
       const credential = firebase.auth.GoogleAuthProvider.credential(idToken, accessToken);
       const firebaseUserCredential = await firebase.auth().signInWithCredential(credential);
       const { email, displayName, uid } = firebaseUserCredential.user;
-      this.props.User.create({email, displayName, uid}).then(() =>{
-        this.props.navigation.replace("Drawer");
-      });
-     
+      this.props.navigation.navigate("UserType", { email, displayName, uid });
     } catch (error) {
       console.log(error);
     }

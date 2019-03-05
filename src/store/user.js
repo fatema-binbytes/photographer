@@ -1,11 +1,18 @@
 /*eslint-disable */
-import { observable, action } from "mobx";
-import { saveKey } from "../utils/db";
+import { observable, action, set } from "mobx";
+import { save } from "../utils/db";
 import firebase from "react-native-firebase";
 
 class User {
   @observable
-  id = "";
+  uid = "";
+  @observable
+  displayName = "";
+  @observable
+  email = "";
+  @observable
+  accountType = "";
+
   @observable
   userName='Username'
   @observable
@@ -29,10 +36,23 @@ class User {
 
   @action
   async create(data) {
+    
+    console.log(data);
+
     this.id = data.uid;
-    console.log(data)
-    console.log(this.id)
-    return saveKey(data.uid);
+    this.displayName = data.displayName;
+    this.email = data.email;
+    this.accountType = data.accountType;
+    
+    return save(data);
+  }
+
+  @action
+  set(value){
+    this.uid = value.uid;
+    this.displayName = value.displayName;
+    this.email = value.email;
+    this.accountType = value.accountType
   }
 
 }

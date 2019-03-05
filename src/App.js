@@ -13,6 +13,7 @@ import Story from "./screens/Story";
 import Sidebar from "./screens/Sidebar";
 
 import Profile from "./screens/Profile/";
+import UserType from "./screens/UserType";
 
 import Explore from './screens/Explore'
 import ProfileTabs from './screens/Photographer/ProfileTabs'
@@ -51,7 +52,7 @@ const TabNavigation = TabNavigator({
 
 const Drawer = DrawerNavigator(
   {
-   Explore:{screen:Explore},
+    Explore:{screen:Explore},
     Profile: { screen: Profile },
     ProfileTabs :{screen:ProfileTabs},
     Settings: { screen: TabNavigation }
@@ -73,7 +74,8 @@ const App = StackNavigator(
     Comments: { screen: Comments },
     Channel: { screen: Channel },
     Drawer: { screen: Drawer },
-    ZoomImage:{screen:ZoomImage}
+    ZoomImage:{screen:ZoomImage},
+    UserType: { screen: UserType }
   },
   {
     index: 0,
