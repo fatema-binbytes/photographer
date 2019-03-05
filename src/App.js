@@ -73,11 +73,12 @@ const App = StackNavigator(
     Comments: { screen: Comments },
     Channel: { screen: Channel },
     Drawer: { screen: Drawer },
-    ZoomImage:{screen:ZoomImage}
+    ZoomImage:{screen:ZoomImage},
+    Friend:{screen:Friend}
   },
   {
     index: 0,
-    initialRouteName: "Splash",
+    initialRouteName: "Login",
     headerMode: "none"
   }
 );

@@ -3,6 +3,7 @@ package com.strapflatapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.imagepicker.ImagePickerPackage;
 
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import io.invertase.firebase.RNFirebasePackage;
@@ -31,7 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
-                    new RNGoogleSigninPackage(),
+                     new ImagePickerPackage(),
+                        new RNGoogleSigninPackage(),
                     new RNFirebasePackage(),
                     new VectorIconsPackage(),
                     new RNFirebaseAuthPackage(),

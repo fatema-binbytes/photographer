@@ -7,6 +7,8 @@ class User {
   @observable
   id = "";
   @observable
+  userData =[]
+  @observable
   userName='Username'
   @observable
   aboutUser ="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
@@ -30,11 +32,28 @@ class User {
   @action
   async create(data) {
     this.id = data.uid;
-    console.log(data)
-    console.log(this.id)
+    this.userData = data
+    
     return saveKey(data.uid);
   }
-
+  @action
+  async saveUSerData(){
+          const userData = this.userData
+        console.log(userData.displayName,userData.email,userData.uid)
+        const data = firebase.firestore().collection('Users')
+        console.log(data,">>>>>")
+       const doc = await data.doc().get()
+       if(doc.exists){
+           console.log(doc.data(),"ifff")
+       } else {
+           const defaultDoc ={
+            Email:userData.email,
+            Name:userData.displayName,
+           }
+           await data.doc().set(defaultDoc)
+           console.log(doc,"else")
+       }
+  }
 }
 
 export default User;

@@ -35,6 +35,7 @@ class LoginForm extends Component {
       const firebaseUserCredential = await firebase.auth().signInWithCredential(credential);
       const { email, displayName, uid } = firebaseUserCredential.user;
       this.props.User.create({email, displayName, uid}).then(() =>{
+       // this.props.User.saveUSerData()
         this.props.navigation.replace("Drawer");
       });
      
@@ -43,6 +44,8 @@ class LoginForm extends Component {
     }
   }
 
+ 
+  
   render() {
     return (
       <Container>
