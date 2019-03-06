@@ -62,6 +62,17 @@ class SideBar extends Component {
             <ListItem
               button
               onPress={() => {
+                navigation.navigate("ImageUpload");
+              }}
+              iconLeft
+              style={styles.links}
+            >
+              <Icon name="md-camera" />
+              <Text style={styles.linkText}>UPLOADIMAGE</Text>
+            </ListItem>
+            <ListItem
+              button
+              onPress={() => {
                 navigation.navigate("Settings");
               }}
               iconLeft

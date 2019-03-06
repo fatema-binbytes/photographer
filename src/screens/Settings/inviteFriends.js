@@ -5,7 +5,7 @@ import {inject,observer} from 'mobx-react'
 import ImagePicker from 'react-native-image-picker'
 
 import PickerComponent from '../../components/ImagePicker/pickerComponent'
-
+import Utils from '../../utils/rendomName'
 
 
 @inject("User")
@@ -51,51 +51,55 @@ export default class InviteFriends extends Component{
        }
     }
     imagespush(id, path, filename, mediaType){
-     
-   const Imageid = id
-   console.log(this.images)
-   this.images.forEach((x) => {if(x.id===Imageid){
-    let Item ={
-      id: x.id,path: path, filename:filename,type: mediaType
-      }
-    this.images.push(Item)
-   } else{let Item ={
-    id: id,path: path, filename:filename,type: mediaType
-    }
-    this.images.push(Item)
-  }})
-   
-   
-     
-    }
-    imageUpload(){
-        const options = {
-            title: 'Select Photo',
-            customButtons: [{ name: 'Gellary', title: 'Choose Photo from Gellary' }],
-            storageOptions: {
-              skipBackup: true,
-              path: 'images',
-            },
-          };
-        
-          ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
-          
-            if (response.didCancel) {
-              console.log('User cancelled image picker');
-            } else if (response.error) {
-              console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-              console.log('User tapped custom button: ', response.customButton);
-            } else {
-              const source = this.state.ImageSource.push({image:response.path}) 
-                console.log(source,this.state.ImageSource)
-          this.setState({
-               isUploadImage:1
-              });
-            }
-          });
+      if( this.images.length !=0){
+        console.log(this.images)
+        for( let i=0;i < this.images.length;i++){
+           console.log(id,i,'plante')
+            if(this.images[i].id === id){
+              this.images.splice(0,3,{path: path, filename:filename,type: mediaType})
+              } else if(this.images[i].id !== id){
+              this.push(id, path, filename, mediaType)
+            return
+          }}
+        }else{
+         this.push(id, path, filename, mediaType)
         }
+       }
+       push(id, path, filename, mediaType){
+          console.log(this.images,'push ')
+            let Item ={
+            id: id,path: path, filename:filename,type: mediaType
+            }
+            this.images.push(Item)
+       }
+    
+        uploadImages(){
+       
+         let promises = []
+              this.images.forEach(image => {
+                promises.push(
+                  new Promise((resolve, reject) => {
+                    firebase
+                      .storage()
+                      .ref('/Images/' + Utils.getFileName())
+                      .putFile(image.path)
+                      .then(rImage => {
+                        resolve({
+                          downloadURL: rImage.downloadURL,
+                          contentType: rImage.metadata.contentType,
+                          name: rImage.metadata.name
+                        })
+                      })
+                      .catch(err => {
+                        console.log(err)
+                      })
+                  })
+                )
+              })
+
+              return promises
+            }
+          
     render(){
      
         return(
@@ -143,31 +147,6 @@ export default class InviteFriends extends Component{
                
               </View>
                
-                <View style={{flexDirection:'row'}}>
-                  <View style={{flex:0.5}}>
-                  <PickerComponent  onFilePick={(path, filename, mediaType) => this.images.push({ path, filename, mediaType })}/>
-                  </View>
-                   
-                  <View style={{flex:0.5}}>
-                      <PickerComponent  onFilePick={(path, filename, mediaType) => this.images.push({ path, filename, mediaType })}/>
-                 </View>
-               </View>
-               <View style={{flexDirection:'row'}}>
-                  <View style={{flex:0.5}}>
-                  <PickerComponent  onFilePick={(path, filename, mediaType) => this.images.push({ path, filename, mediaType })}/>
-                  </View>
-                  <View style={{flex:0.5}}>
-                  <PickerComponent  onFilePick={(path, filename, mediaType) => this.images.push({ path, filename, mediaType })}/>
-                  </View>
-               </View>
-               <View style={{flexDirection:'row'}}>
-                  <View style={{flex:0.5}}>
-                  <PickerComponent id={5} onFilePick={(id,path, filename, mediaType) => this.imagespush(id, path, filename, mediaType)}/>
-                  </View>
-                  <View style={{flex:0.5}}>
-                  <PickerComponent  onFilePick={(path, filename, mediaType) => this.images.push({ path, filename, mediaType })}/>
-                  </View>
-               </View>
                </ScrollView>
                </ImageBackground>
              

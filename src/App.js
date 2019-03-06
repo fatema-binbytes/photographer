@@ -17,10 +17,12 @@ import Profile from "./screens/Profile/";
 import Explore from './screens/Explore'
 import ProfileTabs from './screens/Photographer/ProfileTabs'
 import Friend from './screens/Settings/inviteFriends'
+import ImageUpload from  './screens/ImageUpload/imageUpload'
 import Contact from './screens/Settings/contactUs'
 import Terms from './screens/Settings/termServices'
 import Payment from './screens/Settings/payment'
 import ZoomImage from './screens/ZoomImage/zoomImage'
+
 
 const TabNavigation = TabNavigator({
   Friend:{
@@ -54,7 +56,8 @@ const Drawer = DrawerNavigator(
    Explore:{screen:Explore},
     Profile: { screen: Profile },
     ProfileTabs :{screen:ProfileTabs},
-    Settings: { screen: TabNavigation }
+    Settings: { screen: TabNavigation },
+    ImageUpload:{screen:ImageUpload}
   },
   {
   initialRouteName:'Explore',

@@ -28,11 +28,11 @@ export default class ImagePickerComponent extends Component{
             console.log('Response = ', response);
           
             if (response.didCancel) {
-              console.log('User cancelled image picker');
+             this.setState({isUploadImage:0})
             } else if (response.error) {
-              console.log('ImagePicker Error: ', response.error);
+              this.setState({isUploadImage:0})
             } else if (response.customButton) {
-              console.log('User tapped custom button: ', response.customButton);
+              this.setState({isUploadImage:0})
             } else {
               const source = response.path 
                 console.log(this.state.ImageSource)
@@ -47,15 +47,15 @@ export default class ImagePickerComponent extends Component{
     render(){
         return(
             <View>
-                {this.state.isUploadImage == 1 ?  <View style={{flex:1}}>
+                {this.state.isUploadImage == 1 ?  <View style={{backgroundColor:'white'}}>
            <TouchableOpacity onPress={()=>this.imageUpload(this.props.id)}>
-            <Image style={{borderColor:4,borderColor:'grey',margin:4}} source={{uri:"file:///" + this.state.ImageSource}} height={130} width={150}/>
+            <Image style={{borderColor:4,borderColor:'red',margin:4}} source={{uri:"file:///" + this.state.ImageSource}} height={130} width={150}/>
             </TouchableOpacity>
             </View>
            :
-                 <TouchableOpacity style={{margin:4,height:130,width:150,alignItems:'center',justifyContent:'center',backgroundColor:'black'}}
+                 <TouchableOpacity style={{margin:4,height:130,width:150,alignItems:'center',justifyContent:'center',backgroundColor:'grey'}}
                  onPress={()=> this.imageUpload(this.props.id)}>
-                 <Icon name="md-person-add" color='black' />
+                 <Icon name="md-person-add"  />
                  </TouchableOpacity>
                }
             </View>
