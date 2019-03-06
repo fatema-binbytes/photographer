@@ -1,11 +1,22 @@
 /*eslint-disable */
-import { observable, action } from "mobx";
-import { saveKey } from "../utils/db";
+import { observable, action, set } from "mobx";
+import { save } from "../utils/db";
 import firebase from "react-native-firebase";
+
+const COLL_USER = "Users";
 
 class User {
   @observable
-  id = "";
+  uid = "";
+  @observable
+  displayName = "";
+  @observable
+  email = "";
+  @observable
+  accountType = "";
+  @observable
+  about = "";
+
   @observable
   userData =[]
   @observable
@@ -25,34 +36,40 @@ class User {
   {id:10,image:require("../../assets/NewsIcons/9.jpg"),name:'SCIENCE'}
 ]
 
-  constructor(){
+  constructor() {
     this.firestore = firebase.firestore()
+    this.userCollection = this.firestore.collection(COLL_USER);
   }
 
   @action
-  async create(data) {
-    this.id = data.uid;
-    this.userData = data
+  async createOrUpdate(id, data) {
+
+    await this.userCollection.doc(id).set(data);
+
+    this.id = id;
+    this.displayName = data.displayName;
+    this.email = data.email;
+    this.accountType = data.accountType;
+    this.about = data.about;
     
-    return saveKey(data.uid);
+    return save(data);
   }
+
   @action
-  async saveUSerData(){
-          const userData = this.userData
-        console.log(userData.displayName,userData.email,userData.uid)
-        const data = firebase.firestore().collection('Users')
-        console.log(data,">>>>>")
-       const doc = await data.doc().get()
-       if(doc.exists){
-           console.log(doc.data(),"ifff")
-       } else {
-           const defaultDoc ={
-            Email:userData.email,
-            Name:userData.displayName,
-           }
-           await data.doc().set(defaultDoc)
-           console.log(doc,"else")
-       }
+  async getById(id) {
+    const doc = await this.userCollection.doc(id).get();
+    if(doc.exists)
+      return doc.data();
+    else
+      return false;
+  }
+
+  @action
+  set(value) {
+    this.uid = value.uid;
+    this.displayName = value.displayName;
+    this.email = value.email;
+    this.accountType = value.accountType
   }
 }
 

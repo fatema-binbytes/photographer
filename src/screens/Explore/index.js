@@ -54,19 +54,15 @@ class Explore extends Component {
           <Right /> 
          
         </Header>
-            <View style={{flex:1,}}>
+          <View style={{flex:1,}}>
             <FlatList
-             data={this.props.User.imageData}
-             numColumns={2}
-             renderItem={(item) => { 
-             return<ImageComponent navi={"Profile"} text={item.item.name} navigation={this.props.navigation}item={item.item}/>
-            }}
-            
-            keyExtractor={(item,index )=>  `${index}`}/>
-           </View>
-           
-           
-          
+              data={this.props.User.imageData}
+              numColumns={2}
+              renderItem={(item) => { 
+              return<ImageComponent navi={"Profile"} text={item.item.name} navigation={this.props.navigation}item={item.item}/>
+              }}  
+              keyExtractor={(item,index )=>  `${index}`}/>
+        </View>
       </Container>
     );
   }
