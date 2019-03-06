@@ -3,6 +3,8 @@ import { observable, action, set } from "mobx";
 import { save } from "../utils/db";
 import firebase from "react-native-firebase";
 
+const COLL_USER = "Users";
+
 class User {
   @observable
   uid = "";
@@ -12,7 +14,11 @@ class User {
   email = "";
   @observable
   accountType = "";
+  @observable
+  about = "";
 
+  @observable
+  userData =[]
   @observable
   userName='Username'
   @observable
@@ -30,31 +36,41 @@ class User {
   {id:10,image:require("../../assets/NewsIcons/9.jpg"),name:'SCIENCE'}
 ]
 
-  constructor(){
+  constructor() {
     this.firestore = firebase.firestore()
+    this.userCollection = this.firestore.collection(COLL_USER);
   }
 
   @action
-  async create(data) {
-    
-    console.log(data);
+  async createOrUpdate(id, data) {
 
-    this.id = data.uid;
+    await this.userCollection.doc(id).set(data);
+
+    this.id = id;
     this.displayName = data.displayName;
     this.email = data.email;
     this.accountType = data.accountType;
+    this.about = data.about;
     
     return save(data);
   }
 
   @action
-  set(value){
+  async getById(id) {
+    const doc = await this.userCollection.doc(id).get();
+    if(doc.exists)
+      return doc.data();
+    else
+      return false;
+  }
+
+  @action
+  set(value) {
     this.uid = value.uid;
     this.displayName = value.displayName;
     this.email = value.email;
     this.accountType = value.accountType
   }
-
 }
 
 export default User;

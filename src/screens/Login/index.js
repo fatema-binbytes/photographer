@@ -33,12 +33,14 @@ class LoginForm extends Component {
       const credential = firebase.auth.GoogleAuthProvider.credential(idToken, accessToken);
       const firebaseUserCredential = await firebase.auth().signInWithCredential(credential);
       const { email, displayName, uid } = firebaseUserCredential.user;
-      this.props.navigation.navigate("UserType", { email, displayName, uid });
+      this.props.navigation.navigate("EditProfile", { email, displayName, uid });
     } catch (error) {
       console.log(error);
     }
   }
 
+ 
+  
   render() {
     return (
       <Container>

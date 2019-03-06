@@ -10,17 +10,37 @@ import {
   View
 } from "native-base";
 import { inject } from "mobx-react";
+import { NavigationActions } from "react-navigation";
 
+import Input from "../../components/Input";
 import styles from "./styles";
 
 @inject("User")
-export default class UserType extends Component {
+export default class EditProfile extends Component {
 
   constructor(props) {
     super(props);
+
+    const { displayName, email, uid } = this.props.navigation.state.params;
+    this.id = uid;
     this.state = {
+      displayName: displayName,
+      email: email,
+      about: "",
       accountType: "photographer"
     };
+  }
+
+  async componentDidMount() {
+    const user = await this.props.User.getById(this.id);
+    if(user) {
+      this.setState({
+        displayName: user.displayName,
+        email: user.email,
+        about: user.about,
+        accountType: user.accountType
+      });
+    }
   }
 
   onValueChange(value) {
@@ -31,13 +51,15 @@ export default class UserType extends Component {
 
   render() {
 
-    const { displayName } = this.props.navigation.state.params;
+    const { displayName, email, about } = this.state;
 
     return (
       <Container style={styles.container}>
         <Content contentContainerStyle={styles.contentContainer}>
           <Form>
-            <Text style={styles.label}>{`Hello, ${displayName}`}</Text>
+            <Input label={"Name"} value={displayName} onChangeText={text => this.setState({displayName: text})} />
+            <Input label={"Email"} keyboardType={"email-address"} value={email} editable={false} />
+            <Input label={"About"} numberOfLines={4} value={about} onChangeText={text => this.setState({about: text})} />
             <Text style={styles.subLabel}>Please Account Type : </Text>
             <View style={styles.pickerContainer}>
               <Picker
@@ -54,7 +76,7 @@ export default class UserType extends Component {
               </Picker>
             </View>
           </Form>
-          <Button style={{marginTop: 64}} light full>
+          <Button onPress={this.onNext} style={{marginTop: 64}} light full>
             <Text> Next </Text>
           </Button>
         </Content>
@@ -63,10 +85,14 @@ export default class UserType extends Component {
   }
 
   onNext = () => {
-    const { email, displayName, uid } = this.props.navigation.state.params;
-    this.props.User.create({email, displayName, uid, accountType: this.state.accountType}).then(() =>{
-      this.props.User.set({ uid, displayName, email, accountType: this.state.accountType });
-      this.props.navigation.replace("Drawer");
-    });
+    this.props.User.createOrUpdate(this.id, this.state).then(() => {
+      const resetAction = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: "Drawer"})
+        ]
+      });
+      this.props.navigation.dispatch(resetAction);
+    })
   }
 }

@@ -13,7 +13,7 @@ import Story from "./screens/Story";
 import Sidebar from "./screens/Sidebar";
 
 import Profile from "./screens/Profile/";
-import UserType from "./screens/UserType";
+import EditProfile from "./screens/EditProfile";
 
 import Explore from './screens/Explore'
 import ProfileTabs from './screens/Photographer/ProfileTabs'
@@ -24,9 +24,9 @@ import Payment from './screens/Settings/payment'
 import ZoomImage from './screens/ZoomImage/zoomImage'
 
 const TabNavigation = TabNavigator({
-  Friend:{
-    screen:Friend
-  },
+  // Friend:{
+  //   screen:Friend
+  // },
   Contact:{
     screen:Contact
   },
@@ -75,7 +75,8 @@ const App = StackNavigator(
     Channel: { screen: Channel },
     Drawer: { screen: Drawer },
     ZoomImage:{screen:ZoomImage},
-    UserType: { screen: UserType }
+    EditProfile: { screen: EditProfile },
+    Friend:{screen:Friend}
   },
   {
     index: 0,

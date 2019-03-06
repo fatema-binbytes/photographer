@@ -10,13 +10,14 @@ export default class Splash extends Component {
     
   componentDidMount(){
     load((err, result) => {
+      console.log(result, err);
       if(result){
         this.props.User.set(JSON.parse(result));
         this.props.navigation.replace("Drawer");
       } else {
         this.props.navigation.replace("Login");
       }
-    })
+    });
   }
 
   render(){

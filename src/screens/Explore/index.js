@@ -31,6 +31,7 @@ class Explore extends Component {
   
   componentDidMount(){
         this.props.User.imageData
+       
       }
   
   render() {

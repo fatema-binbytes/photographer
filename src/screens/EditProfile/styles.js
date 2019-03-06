@@ -18,7 +18,6 @@ export default {
     fontWeight: "bold"
   },
   subLabel: {
-    marginTop: 32,
     fontSize: 16
   },
   pickerContainer: {
