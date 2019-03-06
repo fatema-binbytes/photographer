@@ -44,62 +44,14 @@ export default class InviteFriends extends Component{
             Name:this.state.name,
             About:this.state.aboutUser,
             UserType:this.state.UserType,
-            Images :this.images   
+           
            }
            await data.doc().set(defaultDoc)
            console.log(doc,"else")
        }
     }
-    imagespush(id, path, filename, mediaType){
-      if( this.images.length !=0){
-        console.log(this.images)
-        for( let i=0;i < this.images.length;i++){
-           console.log(id,i,'plante')
-            if(this.images[i].id === id){
-              this.images.splice(0,3,{path: path, filename:filename,type: mediaType})
-              } else if(this.images[i].id !== id){
-              this.push(id, path, filename, mediaType)
-            return
-          }}
-        }else{
-         this.push(id, path, filename, mediaType)
-        }
-       }
-       push(id, path, filename, mediaType){
-          console.log(this.images,'push ')
-            let Item ={
-            id: id,path: path, filename:filename,type: mediaType
-            }
-            this.images.push(Item)
-       }
     
-        uploadImages(){
-       
-         let promises = []
-              this.images.forEach(image => {
-                promises.push(
-                  new Promise((resolve, reject) => {
-                    firebase
-                      .storage()
-                      .ref('/Images/' + Utils.getFileName())
-                      .putFile(image.path)
-                      .then(rImage => {
-                        resolve({
-                          downloadURL: rImage.downloadURL,
-                          contentType: rImage.metadata.contentType,
-                          name: rImage.metadata.name
-                        })
-                      })
-                      .catch(err => {
-                        console.log(err)
-                      })
-                  })
-                )
-              })
-
-              return promises
-            }
-          
+        
     render(){
      
         return(
