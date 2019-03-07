@@ -1,5 +1,6 @@
 package com.strapflatapp;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
@@ -30,19 +31,29 @@ public class MainApplication extends Application implements ReactApplication {
             return BuildConfig.DEBUG;
         }
 
+        @SuppressLint("MissingPermission")
         @Override
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+<<<<<<< HEAD
            
                      new ImagePickerPackage(),
                         new RNGoogleSigninPackage(),
+=======
+                    new ImagePickerPackage(),
+                    new RNGoogleSigninPackage(),
+>>>>>>> 17ebdf9c36fc60e3c1c0c95fba1f64aad350b9e5
                     new RNFirebasePackage(),
                     new VectorIconsPackage(),
                     new RNFirebaseAuthPackage(),
                     new RNFirebaseFirestorePackage(),
+<<<<<<< HEAD
                      new RNFirebaseStoragePackage() 
                     
+=======
+                    new RNFirebaseStoragePackage()
+>>>>>>> 17ebdf9c36fc60e3c1c0c95fba1f64aad350b9e5
             );
         }
 

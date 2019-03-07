@@ -14,6 +14,7 @@ import Sidebar from "./screens/Sidebar";
 
 import Profile from "./screens/Profile/";
 import EditProfile from "./screens/EditProfile";
+import ImageUpload from "./screens/ImageUpload";
 
 import Explore from './screens/Explore'
 import ProfileTabs from './screens/Photographer/ProfileTabs'
@@ -79,7 +80,8 @@ const App = StackNavigator(
     Drawer: { screen: Drawer },
     ZoomImage:{screen:ZoomImage},
     EditProfile: { screen: EditProfile },
-    Friend:{screen:Friend}
+    Friend:{ screen:Friend },
+    ImageUpload:{ screen: ImageUpload }
   },
   {
     index: 0,

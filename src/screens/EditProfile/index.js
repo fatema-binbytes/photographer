@@ -10,7 +10,6 @@ import {
   View
 } from "native-base";
 import { inject } from "mobx-react";
-import { NavigationActions } from "react-navigation";
 
 import Input from "../../components/Input";
 import styles from "./styles";
@@ -22,8 +21,9 @@ export default class EditProfile extends Component {
     super(props);
 
     const { displayName, email, uid } = this.props.navigation.state.params;
-    this.id = uid;
+    
     this.state = {
+      uid: uid,
       displayName: displayName,
       email: email,
       about: "",
@@ -32,7 +32,7 @@ export default class EditProfile extends Component {
   }
 
   async componentDidMount() {
-    const user = await this.props.User.getById(this.id);
+    const user = await this.props.User.getById(this.state.uid);
     if(user) {
       this.setState({
         displayName: user.displayName,
@@ -85,14 +85,6 @@ export default class EditProfile extends Component {
   }
 
   onNext = () => {
-    this.props.User.createOrUpdate(this.id, this.state).then(() => {
-      const resetAction = NavigationActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({ routeName: "Drawer"})
-        ]
-      });
-      this.props.navigation.dispatch(resetAction);
-    })
+    this.props.navigation.navigate("ImageUpload", { ...this.state });
   }
 }

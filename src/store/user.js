@@ -2,6 +2,7 @@
 import { observable, action, set } from "mobx";
 import { save } from "../utils/db";
 import firebase from "react-native-firebase";
+import Utils from "../utils/str";
 
 const COLL_USER = "Users";
 
@@ -16,6 +17,8 @@ class User {
   accountType = "";
   @observable
   about = "";
+
+  images = [];
 
   @observable
   userData =[]
@@ -42,22 +45,29 @@ class User {
   }
 
   @action
-  async createOrUpdate(id, data) {
-
-    await this.userCollection.doc(id).set(data);
-
-    this.id = id;
+  createOrUpdate(data, images, callback) {
+    
+    this.uid = data.uid;
     this.displayName = data.displayName;
     this.email = data.email;
     this.accountType = data.accountType;
     this.about = data.about;
-    
-    return save(data);
+    this.images = images;
+
+    Promise.all(this.fileupload()).then(async result => {
+      const _data = {
+        ...data,
+        images: result   
+      }
+      delete _data.uid;
+      await this.userCollection.doc(data.uid).set(_data);
+      save(data).then(() => callback()).catch(err => console.log(err));
+    }).catch(err => console.log(err));
   }
 
   @action
-  async getById(id) {
-    const doc = await this.userCollection.doc(id).get();
+  async getById(uid) {
+    const doc = await this.userCollection.doc(uid).get();
     if(doc.exists)
       return doc.data();
     else
@@ -70,6 +80,38 @@ class User {
     this.displayName = value.displayName;
     this.email = value.email;
     this.accountType = value.accountType
+  }
+
+  fileupload() {
+    let promises = []
+    const _images = this.images.filter(x => x != null && x != undefined);
+    _images.forEach(image => {
+      promises.push(
+        new Promise((resolve, reject) => {
+          if(image.downloadURL){
+            resolve({
+              downloadURL: image.downloadURL,
+              name: image.name              
+            })
+          } else {
+            firebase
+            .storage()
+            .ref('/images/' + Utils.getFileName())
+            .putFile(image.path)
+            .then(rImage => {
+              resolve({
+                downloadURL: rImage.downloadURL,
+                name: rImage.metadata.name
+              })
+            })
+            .catch(err => {
+              console.log(err)
+            })
+          }
+        })
+      )
+    });
+    return promises
   }
 }
 
