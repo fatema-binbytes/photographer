@@ -1,5 +1,6 @@
 package com.strapflatapp;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
+import io.invertase.firebase.storage.RNFirebaseStoragePackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -28,16 +30,18 @@ public class MainApplication extends Application implements ReactApplication {
             return BuildConfig.DEBUG;
         }
 
+        @SuppressLint("MissingPermission")
         @Override
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
-                     new ImagePickerPackage(),
-                        new RNGoogleSigninPackage(),
+                    new ImagePickerPackage(),
+                    new RNGoogleSigninPackage(),
                     new RNFirebasePackage(),
                     new VectorIconsPackage(),
                     new RNFirebaseAuthPackage(),
-                    new RNFirebaseFirestorePackage()
+                    new RNFirebaseFirestorePackage(),
+                    new RNFirebaseStoragePackage()
             );
         }
 
