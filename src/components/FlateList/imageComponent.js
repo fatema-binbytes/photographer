@@ -10,10 +10,10 @@ export default class ImageComponent extends Component{
                     onPress={()=>this.props.navigation.navigate("ZoomImage",{url:this.props.item})}
                   >
                     <ImageBackground  transparent style={{
-                     
+                     margin:1,
                       height:Dimensions.get("window").height/ 4 + 10,
                       width:Dimensions.get("window").width / 2 + 2,
-                    }} source={this.props.item.image}>
+                    }} source={{uri:this.props.item.downloadURL}}>
                    {this.props.text ?
                    <View transparent style={{backgroundColor:'#33333399',}}><Text transparent
                        style={{fontSize: 12,

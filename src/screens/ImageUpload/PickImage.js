@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { StyleSheet, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, TouchableOpacity, Image,Text } from "react-native";
 import ImagePicker from "react-native-image-picker";
-import Icon from "react-native-vector-icons/MaterialIcons";
+
 
 class PickImage extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class PickImage extends Component {
           onPress={this.selectAvatar}
         >
           <Image
-            source={{ uri: this.props.uri ? this.props.uri : 'file:///' + this.state.avatarSource }}
+            source={{ uri:this.state.avatarSource ?  'file:///' + this.state.avatarSource :this.props.uri}}
             style={styles.image}
           />
         </TouchableOpacity>
@@ -30,7 +30,7 @@ class PickImage extends Component {
           style={styles.container}
           onPress={this.selectAvatar}
         >
-          <Icon name={'add'} color={"#fff"} size={52} />
+          <Text>ADD</Text>
         </TouchableOpacity>
       )
     }
@@ -57,11 +57,12 @@ class PickImage extends Component {
 
         // You can also display the image using data:
         // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-        console.log(source)
+        console.log(response.path,"path")
         this.setState({
           avatarSource: response.path,
           fileName: response.fileName
         })
+        console.log(this.state.avatarSource,"state")
         this.props.onFilePick(response.path, response.fileName)
       }
     })

@@ -3,23 +3,6 @@
 import React, {Component} from "react";
 import {Image, ImageBackground,Dimensions,Platform, View,TouchableOpacity,FlatList, ListView} from "react-native";
 
-import {
-  Container,
-  Content,
-  Text,
-  Thumbnail,
-  Left,
-  Right,
-  Body,
-  
- Header,
-  List,
-  ListItem,
-  Button,
-  Icon
-} from "native-base";
-import {Grid, Col} from "react-native-easy-grid";
-
 import { inject, observer } from 'mobx-react'
 import styles from "./styles";
 

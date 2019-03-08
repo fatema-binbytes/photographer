@@ -1,20 +1,16 @@
 // @flow
 import React, {Component} from "react";
-import {Image, ImageBackground, TouchableOpacity, Dimensions,Platform,FlatList} from "react-native";
+import {ImageBackground,} from "react-native";
 
 import {
   Container,
   Content,
   Text,
-  Thumbnail,
   View,
-  List,
   ListItem,
-  Button,
-  Icon
+ 
 } from "native-base";
 import {inject,observer} from 'mobx-react'
-import {Grid, Col} from "react-native-easy-grid";
 import CustomHeader from "../../components/CustomHeader";
 import ProfileTab from '../Photographer/ProfileTabs/tabOne'
 
@@ -40,7 +36,7 @@ class Profile extends Component {
             showsVerticalScrollIndicator={false}
             style={{backgroundColor: "#fff"}}
           >
-            
+             
 
             {!this.props.User.imageData
               ? <View style={styles.linkTabs}>

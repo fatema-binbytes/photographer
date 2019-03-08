@@ -27,12 +27,20 @@ const headerLogo = require("../../../assets/header-logo.png");
 @inject('User')
 @observer
 class Explore extends Component {
+  constructor(){
+    super()
+    this.state ={
+      data : []
+    }
+  }
   
   
-  componentDidMount(){
-        this.props.User.imageData
-       
+ async componentDidMount(){
+      const user = await this.props.User.getById(this.props.User.uid)
+      if(user){
+        this.setState({data:user})
       }
+     }
   
   render() {
    
@@ -56,7 +64,7 @@ class Explore extends Component {
         </Header>
           <View style={{flex:1,}}>
             <FlatList
-              data={this.props.User.imageData}
+              data={this.state.data.images}
               numColumns={2}
               renderItem={(item) => { 
               return<ImageComponent navi={"Profile"} text={item.item.name} navigation={this.props.navigation}item={item.item}/>

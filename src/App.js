@@ -19,17 +19,18 @@ import ImageUpload from "./screens/ImageUpload";
 import Explore from './screens/Explore'
 import ProfileTabs from './screens/Photographer/ProfileTabs'
 import Friend from './screens/Settings/inviteFriends'
-import ImageUpload from  './screens/ImageUpload/imageUpload'
+import ImageUpdate from  './screens/ImageUpload/imageUpload'
 import Contact from './screens/Settings/contactUs'
 import Terms from './screens/Settings/termServices'
 import Payment from './screens/Settings/payment'
 import ZoomImage from './screens/ZoomImage/zoomImage'
+import EditProfiles from './screens/EditProfile/editProfile'
 
 
 const TabNavigation = TabNavigator({
-  // Friend:{
-  //   screen:Friend
-  // },
+  Friend:{
+    screen:Friend
+  },
   Contact:{
     screen:Contact
   },
@@ -59,7 +60,9 @@ const Drawer = DrawerNavigator(
     Profile: { screen: Profile },
     ProfileTabs :{screen:ProfileTabs},
     Settings: { screen: TabNavigation },
-    ImageUpload:{screen:ImageUpload}
+    EditProfiles:{ screen: EditProfiles},
+    ImageUpdate:{screen:ImageUpdate}
+   
   },
   {
   initialRouteName:'Explore',
@@ -80,8 +83,10 @@ const App = StackNavigator(
     Drawer: { screen: Drawer },
     ZoomImage:{screen:ZoomImage},
     EditProfile: { screen: EditProfile },
-    Friend:{ screen:Friend },
-    ImageUpload:{ screen: ImageUpload }
+    EditProfiles:{ screen: EditProfiles},
+    ImageUpload:{ screen: ImageUpload },
+    ImageUpdate:{screen:ImageUpdate}
+   
   },
   {
     index: 0,

@@ -9,7 +9,7 @@ render(){
        
           
            <ImageBackground  style={{height: Dimensions.get('window').height, 
-          width: Dimensions.get('window').width}} source={url.image} 
+          width: Dimensions.get('window').width}} source={{uri:url.downloadURL}} 
           resizeMode={'cover'}>
           <View style={{backgroundColor:"#00000066",
                         bottom:0,position:'absolute',

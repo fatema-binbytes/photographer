@@ -1,75 +1,78 @@
 // @flow
 import React, {Component} from "react";
-import {Image, ImageBackground,ScrollView, View,TouchableOpacity,FlatList, ListView} from "react-native";
+import {ScrollView, View,FlatList,TouchableOpacity} from "react-native";
 
 import {
-  Container,
-  Content,
   Text,
-  Thumbnail,
-  Left,
-  Right,
-  Body,
-  
- Header,
-  List,
-  ListItem,
-  Button,
-  Icon
-} from "native-base";
-import {Grid, Col} from "react-native-easy-grid";
+  Thumbnail,Icon
+ } from "native-base";
 
 import { inject, observer } from 'mobx-react'
 import styles from "./styles";
 
 import ImageComponent from '../../../components/FlateList/imageComponent'
 
-
-
-
-
-const headerLogo = require("../../../../assets/header-logo.png");
 @inject('User')
 @observer
 class TabOne extends Component {
+  constructor(){
+    super()
+    this.state = {
+      data:[]
+    }
+  }
   
-  
-  componentDidMount(){
-        this.props.User.imageData
-      }
-  
+  async componentDidMount(){
+    const user = await this.props.User.getById(this.props.User.uid);
+           if(user) {
+             this.setState({ data: user});
+           }
+       }
+ 
   render() {
-   
-   
-    return (
+   return (
       <ScrollView>
         <View style={{flex:1}}>
         <View style={styles.profileInfoContainer}>
-            <View style={{alignSelf: "center"}}>
+        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',position:'relative'}}>
+          <View style={{alignSelf: "center"}}>
               <Thumbnail
-                source={require("../../../../assets/Contacts/user.png")}
+                source={{uri : 'file:///'+this.state.data.userThumbnail}}
                 style={styles.profilePic}
               />
-            </View>
+          </View>
+          <View style={{position:'absolute',top:0,right:0,paddingRight:4}}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('EditProfiles')}> 
+               <Icon name="md-person-add"/>
+               </TouchableOpacity>
+        </View>
+        </View>
+       
             <View style={styles.profileInfo}>
-              <Text style={styles.profileUser}>{this.props.User.userName}</Text>
+              <Text style={styles.profileUser}>{this.state.data.displayName}</Text>
               <Text note style={styles.profileUserInfo}>
-                {this.props.User.aboutUser}
+                {this.state.data.about}
                </Text>
             </View>
-           
+            <View style={{justifyContent:'flex-end',alignItems:'flex-end'}}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('ImageUpdate')}> 
+               <Icon name="md-camera"/>
+               </TouchableOpacity>
+              </View>
           </View>
-         
+           
+          
+            
             <FlatList
-             data={this.props.User.imageData}
+             data={this.state.data.images}
              numColumns={2}
-             renderItem={(item) => { 
-             return<ImageComponent navi={"Profile"} navigation={this.props.navigation}item={item.item}/>
+             renderItem={(item) => {
+             return<ImageComponent  navigation={this.props.navigation}item={item.item}/>
             }}
             
             keyExtractor={(item,index )=>  `${index}`}/>
            </View>
-           
+          
            
            </ScrollView>
     

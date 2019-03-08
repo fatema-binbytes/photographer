@@ -8,9 +8,9 @@ import {
   Text,
   ListItem,
   Thumbnail,
-  View
+  View,Icon
 } from "native-base";
-import Icon from "react-native-vector-icons/MaterialIcons";
+//import Icon from "react-native-vector-icons/MaterialIcons";
 
 import{ inject,observer }from "mobx-react";
 import { Grid, Col } from "react-native-easy-grid";
@@ -20,6 +20,22 @@ import styles from "./style";
 
 @inject("User")
 class SideBar extends Component {
+  constructor(){
+    super()
+    this.state = {
+      data:[]
+    }
+  }
+  
+  componentDidMount() {
+    this.props.navigation.addListener('willFocus', () => this.load())
+  }
+  async load(){
+    const user = await this.props.User.getById(this.props.User.uid);
+           if(user) {
+             this.setState({ data: user});
+           }
+       }
   
   logout() {
     remove(err => {
@@ -50,7 +66,7 @@ class SideBar extends Component {
               iconLeft
               style={styles.links}
             >
-              <Icon name="explore" size={26} color={"#fff"} />
+              {/* <Icon name="explore" size={26} color={"#fff"} /> */}
               <Text style={styles.linkText}> EXPLORE</Text>
             </ListItem>
             <ListItem
@@ -61,20 +77,10 @@ class SideBar extends Component {
               iconLeft
               style={styles.links}
             >
-              <Icon name="person" size={26} color={"#fff"} />
+              {/* <Icon name="person" size={26} color={"#fff"} /> */}
               <Text style={styles.linkText}> PROFILE</Text>
             </ListItem>
-            <ListItem
-              button
-              onPress={() => {
-                navigation.navigate("ImageUpload");
-              }}
-              iconLeft
-              style={styles.links}
-            >
-              <Icon name="md-camera" />
-              <Text style={styles.linkText}>UPLOADIMAGE</Text>
-            </ListItem>
+            
             <ListItem
               button
               onPress={() => {
@@ -83,7 +89,7 @@ class SideBar extends Component {
               iconLeft
               style={styles.links}
             >
-              <Icon name="settings" size={26} color={"#fff"} />
+              {/* <Icon name="settings" size={26} color={"#fff"} /> */}
               <Text style={styles.linkText}>SETTINGS</Text>
             </ListItem>
           </Content>
@@ -114,7 +120,7 @@ class SideBar extends Component {
                     }}
                   >
                     <Thumbnail
-                      source={require("../../../assets/Contacts/user.png")}
+                      source={{uri : 'file:///'+this.state.data.userThumbnail}}
                       style={styles.profilePic}
                     />
                   </TouchableOpacity>

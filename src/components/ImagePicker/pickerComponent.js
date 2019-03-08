@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import {View,Text,Image,TouchableOpacity}from 'react-native'
-import {Icon} from 'native-base'
+import {Icon,Thumbnail} from 'native-base'
 import ImagePicker from 'react-native-image-picker'
 
 export default class ImagePickerComponent extends Component{
@@ -15,15 +15,12 @@ export default class ImagePickerComponent extends Component{
         }
     }
     imageUpload(id){
-        const options = {
-            title: 'Select Photo',
-            customButtons: [{ name: 'Gellary', title: 'Choose Photo from Gellary' }],
-            storageOptions: {
-              skipBackup: true,
-              path: 'images',
-            },
-          };
-        
+      var options = {
+        title: `Select Image`,
+        mediaType: 'photo',
+        takePhotoButtonTitle: `Take Photo`
+      }
+  
           ImagePicker.showImagePicker(options, (response) => {
             console.log('Response = ', response);
           
@@ -35,8 +32,8 @@ export default class ImagePickerComponent extends Component{
               this.setState({isUploadImage:0})
             } else {
               const source = response.path 
-                console.log(this.state.ImageSource)
-          this.setState({
+    
+             this.setState({
               ImageSource:source,
                isUploadImage:1
               })
@@ -47,16 +44,31 @@ export default class ImagePickerComponent extends Component{
     render(){
         return(
             <View>
-                {this.state.isUploadImage == 1 ?  <View style={{backgroundColor:'white'}}>
-           <TouchableOpacity onPress={()=>this.imageUpload(this.props.id)}>
-            <Image style={{borderColor:4,borderColor:'red',margin:4}} source={{uri:"file:///" + this.state.ImageSource}} height={130} width={150}/>
+                {this.state.isUploadImage == 1 ?  <View style={{backgroundColor:'#01cca1'}}>
+           <TouchableOpacity style={{alignSelf: "center",backgroundColor:'#01cca1'}} onPress={()=>this.imageUpload(this.props.id)}>
+           
+              <Thumbnail
+                source={{uri:'file:///'+this.state.ImageSource}}
+                style={{width: 80,
+                  height: 80,
+                  borderRadius: 40,
+                  backgroundColor:'#01cca1'}}
+              />
+         
             </TouchableOpacity>
             </View>
            :
-                 <TouchableOpacity style={{margin:4,height:130,width:150,alignItems:'center',justifyContent:'center',backgroundColor:'grey'}}
-                 onPress={()=> this.imageUpload(this.props.id)}>
-                 <Icon name="md-person-add"  />
-                 </TouchableOpacity>
+           <TouchableOpacity style={{alignSelf: "center",backgroundColor:'#01cca1'}} onPress={()=>this.imageUpload(this.props.id)}>
+           
+           <Thumbnail
+             source={{uri:'file:///'+this.props.userThumbnail}}
+             style={{width: 80,
+               height: 80,
+               borderRadius: 40,
+               backgroundColor:'#01cca1'}}
+           />
+            <Text style={{textAlign:'center',fontWeight:'bold',color:'black'}}>Profile Pic</Text>
+         </TouchableOpacity>
                }
             </View>
             

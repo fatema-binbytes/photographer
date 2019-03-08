@@ -5,6 +5,7 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
+//import com.oblador.vectoricons.VectorIconsPackage;
 import com.imagepicker.ImagePickerPackage;
 
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
@@ -36,10 +37,11 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+                     new VectorIconsPackage(),
                     new ImagePickerPackage(),
                     new RNGoogleSigninPackage(),
                     new RNFirebasePackage(),
-                    new VectorIconsPackage(),
+                   // new VectorIconsPackage(),
                     new RNFirebaseAuthPackage(),
                     new RNFirebaseFirestorePackage(),
                     new RNFirebaseStoragePackage()

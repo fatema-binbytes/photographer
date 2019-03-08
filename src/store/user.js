@@ -17,16 +17,12 @@ class User {
   accountType = "";
   @observable
   about = "";
-
+  @observable
   images = [];
+  @observable
+  userThumbnail= "";
 
-  @observable
-  userData =[]
-  @observable
-  userName='Username'
-  @observable
-  aboutUser ="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-  @observable
+ @observable
   imageData=[{id:1,image:require('../../assets/NewsIcons/9.jpg'),name:'Fashion'},
   {id:2,image:require("../../assets/NewsIcons/2.jpg"),name:'SCIENCE'},
   {id:3,image:require("../../assets/NewsIcons/8.jpg"),name:'FASHION'},
@@ -53,9 +49,10 @@ class User {
     this.accountType = data.accountType;
     this.about = data.about;
     this.images = images;
+    this.userThumbnail =data.userThumbnail
 
     Promise.all(this.fileupload()).then(async result => {
-      const _data = {
+     const _data = {
         ...data,
         images: result   
       }
@@ -68,8 +65,9 @@ class User {
   @action
   async getById(uid) {
     const doc = await this.userCollection.doc(uid).get();
-    if(doc.exists)
-      return doc.data();
+    if(doc.exists){
+     return doc.data();
+    }
     else
       return false;
   }

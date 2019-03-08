@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView ,ToastAndroid} from "react-native";
 import { 
   Container,
   Button,
@@ -14,7 +14,7 @@ import PickImage from "./PickImage"
 import styles from "./styles";
 
 @inject("User")
-export default class EditProfile extends Component {
+export default class  ImageUpload extends Component {
 
   constructor(props) {
     super(props);
@@ -30,18 +30,19 @@ export default class EditProfile extends Component {
     }
   }
 
+  
   render() {
 
     return (
-      <ScrollView>
+     
         <Container style={styles.container}>
+         <ScrollView>
           <Content contentContainerStyle={styles.contentContainer}>
             <Text style={{fontSize: 26, fontWeight: "bold", alignSelf: "center", marginBottom: 16}}>Add Portfolio</Text>
             <View style={{flexGrow: 1, flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between"}}>
               {
                 Array.apply(0, Array(6)).map((x, i) => {
                   const uri = this.state.images[i] ? this.state.images[i].downloadURL : null
-                  console.log(this.state.images[i]);
                   return <PickImage uri={uri} onFilePick={(path, filename) => this.state.images[i] = { path, filename }} key={i} />
                 })
               }
@@ -50,8 +51,9 @@ export default class EditProfile extends Component {
               <Text> Done </Text>
             </Button>
           </Content>
+          </ScrollView>
         </Container>
-      </ScrollView>
+     
     );
   }
 
@@ -65,5 +67,8 @@ export default class EditProfile extends Component {
       });
       this.props.navigation.dispatch(resetAction);
     })
+    ToastAndroid.show(
+      "Image Uploded",
+       ToastAndroid.LONG )
   }
 }
